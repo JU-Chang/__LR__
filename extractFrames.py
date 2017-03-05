@@ -16,20 +16,19 @@ for files in os.listdir(source_path):
             vc = cv2.VideoCapture(os.path.join(source_path, files, filename))
             print cv2.cv.CV_CAP_PROP_FPS
             if vc.isOpened():
-                rval, frame = vc.read()
-            else:
-                rval = False
-                print rval
-            while rval:
-                rval, frame = vc.read()
-                dest_dir = os.path.join(destination_path, files, str(video_count))
-                if not os.path.exists(dest_dir):
-                    os.makedirs(dest_dir)
-                jpg_filename = os.path.join(dest_dir, str(frame_count)+'.jpg')
-                cv2.imwrite(jpg_filename, frame)
-                print('saving:%d' % frame_count)
-                frame_count += 1
-                cv2.waitKey(1)
+                while True:
+                    rval, frame = vc.read()
+                    dest_dir = os.path.join(destination_path, files, str(video_count))
+                    if not os.path.exists(dest_dir):
+                        os.makedirs(dest_dir)
+                    jpg_filename = os.path.join(dest_dir, str(frame_count)+'.jpg')
+                    if (rval is True) and (frame is not None):
+                        cv2.imwrite(jpg_filename, frame)
+                        print('saving:%d' % frame_count)
+                        frame_count += 1
+                    else:
+                        break
+                    cv2.waitKey(1)
             vc.release()
 
 
