@@ -1,8 +1,10 @@
 import cv2
 import os
 
-source_path = '/media/chang/fe3dd8af-5577-42cb-95fb-4bd30a47cc9e/dataset/GRID/video'
-destination_path = '/media/chang/fe3dd8af-5577-42cb-95fb-4bd30a47cc9e/dataset/GRID/frames'
+source_path = '/media/chang/fe3dd8af-5577-42cb-95fb-4bd30a47cc9e/' \
+              'dataset/GRID/video'
+destination_path = '/media/chang/fe3dd8af-5577-42cb-95fb-4bd30a47cc9e/' \
+                   'dataset/GRID/frames'
 
 speaker_num = 34
 for files in os.listdir(source_path):
