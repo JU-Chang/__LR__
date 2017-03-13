@@ -36,6 +36,7 @@ def save_frame(start_frame, end_frame, video_path, category, label):
     for i in range(start_frame, end_frame+1):
         source = os.path.join(video_path, str(i)+'.jpg')
         target = os.path.join(save_path, str(i)+'.jpg')
+        #deal with the videos with some problems
         assert os.path.exists(source)
         assert not os.system(' '.join(['cp', source, target]))
 
@@ -69,8 +70,11 @@ for talker in os.listdir(alignment_path):
 
             oneline = align_file.read()
             alignment = numpy.reshape(oneline.split(), (-1, 3))
-            if alignment.shape[0]>8:
-                alignment = numpy.delete(alignment, 4, 0)
+            #delete 'sp' line in the algin txt.
+            if alignment.shape[0] > 8:
+                sp_ind = numpy.nonzero(alignment=='sp')[0]
+                print sp_ind
+                alignment = numpy.delete(alignment, sp_ind, 0)
             start_f = alignment[1:7, 0].astype(int)/1000
             end_f = alignment[1:7, 1].astype(int)/1000
             # logging.info(alignment[1:7, 2])
